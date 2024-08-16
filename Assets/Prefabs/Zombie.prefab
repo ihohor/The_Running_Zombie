@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6983105948727048773}
   - component: {fileID: 3136176416413915851}
   - component: {fileID: 202153630554389353}
+  - component: {fileID: 4349516467181181532}
   m_Layer: 3
   m_Name: Zombie
   m_TagString: Player
@@ -52,6 +53,7 @@ MonoBehaviour:
   move: 0
   jumpForce: 10
   Dead: 0
+  zombieHealth: {fileID: 0}
 --- !u!212 &4889449117927240778
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -197,3 +199,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4349516467181181532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5171356344014048626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54bbc00c8dc31a7449292310efbe5888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  HealthBar: {fileID: 0}

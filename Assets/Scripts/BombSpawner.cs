@@ -25,3 +25,4 @@ public class BombSpawner : MonoBehaviour
         Instantiate(bombPrefab, spawnPosition, Quaternion.identity);
     }
 }
+
