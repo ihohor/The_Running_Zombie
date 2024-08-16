@@ -19,17 +19,6 @@ public class BombController : MonoBehaviour
         {
             HandleCollision();
         }
-        else if (collision.gameObject.CompareTag("Player"))
-        {
-            // Ustawienie stanu Dead na true, aby uruchomiæ animacjê œmierci
-            ZombieController zombie = collision.gameObject.GetComponent<ZombieController>();
-            if (zombie != null)
-            {
-                zombie.Dead = true;
-            }
-
-            HandleCollision();
-        }
 
         Debug.Log("Bomba uderzy³a w: " + collision.collider.name);
         if (collision.collider.CompareTag("Ground") || collision.collider.CompareTag("Player"))

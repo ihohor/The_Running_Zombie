@@ -15,13 +15,13 @@ public class ZombieController : MonoBehaviour
     private float doubleTapTime = 0.3f; // Czas pomiêdzy dwoma dotkniêciami
     private bool isGrounded;
 
-    public ZombieHealth zombieHealth;
+    public ZombieHealth zombieHealth; // Odniesienie do komponentu ZombieHealth
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        zombieHealth = GetComponent<ZombieHealth>();
+        zombieHealth = GetComponent<ZombieHealth>(); // Inicjalizacja komponentu ZombieHealth
     }
 
     void Update()
@@ -136,11 +136,13 @@ public class ZombieController : MonoBehaviour
             Invoke("LoadDeathScreen", animator.GetCurrentAnimatorStateInfo(0).length);
         }
 
+        // Kolizja z apteczk¹ (MedKit)
         if (collision.collider.CompareTag("MedKit"))
         {
             zombieHealth.Heal(20f); // Dodaj punkty ¿ycia przy kolizji z apteczk¹
             Destroy(collision.gameObject); // Zniszcz apteczkê po jej podniesieniu
         }
+
     }
 
     void LoadDeathScreen()
@@ -148,4 +150,3 @@ public class ZombieController : MonoBehaviour
         SceneManager.LoadScene("DeathScreenScene"); // Upewnij siê, ¿e nazwa sceny jest poprawna
     }
 }
-

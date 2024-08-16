@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 6325454960734943641}
   - component: {fileID: 2270880458287979224}
   - component: {fileID: 5820018262121003574}
-  - component: {fileID: 994675606806716426}
   m_Layer: 0
   m_Name: Nuke
   m_TagString: Untagged
@@ -181,17 +180,3 @@ CircleCollider2D:
   m_Offset: {x: -1.9212415, y: 0.2928095}
   serializedVersion: 2
   m_Radius: 0.8544538
---- !u!114 &994675606806716426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8976050380900101688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 165bd55452d5fe54fad4cc686e2fa8fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 5407558167575856908, guid: a13fe7efba574e148a7cc07f9ba8c997, type: 3}
-  timeToExplode: 2

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4718876476165203293}
   - component: {fileID: 6896155961859449832}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pills
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,9 +95,9 @@ GameObject:
   - component: {fileID: 1074505512737335292}
   - component: {fileID: 915926000560305082}
   - component: {fileID: 8832874639385682822}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MedKit
-  m_TagString: Untagged
+  m_TagString: MedKIt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

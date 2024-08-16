@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Bomb
   - Kinetic
+  - MedKIt
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Ground
   - Bomb
   - Kinetic
-  - 
+  - MedKit
   - 
   - 
   - 

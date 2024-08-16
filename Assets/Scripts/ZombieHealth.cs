@@ -3,9 +3,9 @@ using UnityEngine.UI;
 
 public class ZombieHealth : MonoBehaviour
 {
-    public float maxHealth = 100f; // Maksymalny poziom ¿ycia
-    public float currentHealth;    // Aktualny poziom ¿ycia
-    public Image HealthBar;        // Odnoœnik do UI Image reprezentuj¹cego zdrowie
+    public float maxHealth = 100f;
+    public float currentHealth;
+    public Image healthBar; // Przypisz obrazek paska zdrowia w inspektorze
 
     void Start()
     {
@@ -13,37 +13,43 @@ public class ZombieHealth : MonoBehaviour
         UpdateHealthBar();
     }
 
-    // Funkcja wywo³ywana, gdy zombie otrzymuje obra¿enia
+    // Metoda do zadawania obra¿eñ
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        if (currentHealth < 0) currentHealth = 0;
-        UpdateHealthBar();
-
         if (currentHealth <= 0)
         {
+            currentHealth = 0;
             Die();
+        }
+        UpdateHealthBar();
+    }
+
+    // Metoda do leczenia
+    public void Heal(float healAmount)
+    {
+        currentHealth += healAmount;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        UpdateHealthBar();
+    }
+
+    // Aktualizacja paska zdrowia
+    void UpdateHealthBar()
+    {
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = currentHealth / maxHealth;
         }
     }
 
-    // Funkcja wywo³ywana, gdy zombie zbiera apteczkê
-    public void Heal(float amount)
-    {
-        currentHealth += amount;
-        if (currentHealth > maxHealth) currentHealth = maxHealth;
-        UpdateHealthBar();
-    }
-
-    // Aktualizacja paska zdrowia na UI
-    void UpdateHealthBar()
-    {
-        HealthBar.fillAmount = currentHealth / maxHealth;
-    }
-
-    // Funkcja œmierci
+    // Metoda wywo³ywana, gdy zdrowie spadnie do 0
     void Die()
     {
-        // Dodaj logikê œmierci, np. animacjê, przejœcie do ekranu œmierci
-        Debug.Log("Zombie is Dead");
+        // Mo¿esz tutaj dodaæ logikê œmierci
+        Debug.Log("Zombie is Dead!");
     }
 }
+
