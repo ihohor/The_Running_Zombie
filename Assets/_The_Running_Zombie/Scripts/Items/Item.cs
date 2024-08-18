@@ -3,8 +3,9 @@ using UnityEngine;
 
 public abstract class Item : MonoBehaviour
 {
+	[SerializeField] private float _destroyDelay = 5f;
+	
 	private bool _ishasCollided;
-	private float _destroyDelay = 2f;
 
 	private void Start()
 	{
