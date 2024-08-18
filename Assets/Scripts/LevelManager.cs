@@ -1,83 +1,78 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
 
-    private int currentLevel = 1;
-    private float touchDuration = 0f;
-    private float requiredTouchTime = 2f; // Czas wymagany do zmiany poziomu (2 sekundy)
+    private float timer = 0f;
+    public float timeToSurvive = 300f;
+    public TextMeshProUGUI timerText;
 
     void Awake()
     {
-        // Sprawdzanie, czy instancja ju¿ istnieje
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Zapewnia, ¿e obiekt nie zostanie zniszczony przy ³adowaniu nowych scen
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject); // Usuwa nadmiarow¹ instancjê
+            Destroy(gameObject);
         }
     }
 
     void Start()
     {
-        LoadLevel(currentLevel);
+        SceneManager.sceneLoaded += OnSceneLoaded; // Subskrybuj zdarzenie ³adowania sceny
+        UpdateTimerText();
     }
 
     void Update()
     {
-        HandleTouchInput();
+        if (timerText != null)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= timeToSurvive)
+            {
+                NextLevel();
+            }
+
+            UpdateTimerText();
+        }
     }
 
-    public void LoadLevel(int level)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        currentLevel = level;
-        SceneManager.LoadScene("Level" + currentLevel + "Scene"); // £aduje scenê na podstawie numeru poziomu
+        // Przypisz ponownie timerText po za³adowaniu nowej sceny
+        timerText = GameObject.Find("TimerText").GetComponent<TextMeshProUGUI>();
+    }
+
+    private void UpdateTimerText()
+    {
+        if (timerText != null)
+        {
+            float timeRemaining = timeToSurvive - timer;
+            int minutes = Mathf.FloorToInt(timeRemaining / 60F);
+            int seconds = Mathf.FloorToInt(timeRemaining % 60F);
+
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
     }
 
     public void NextLevel()
     {
-        if (currentLevel < 10) // Za³ó¿my, ¿e masz 10 poziomów
-        {
-            currentLevel++;
-            LoadLevel(currentLevel);
-        }
-        else
-        {
-            // Mo¿na dodaæ ekran zwyciêstwa lub inne akcje po ukoñczeniu ostatniego poziomu
-            Debug.Log("Wszystkie poziomy ukoñczone!");
-        }
+        // Za³aduj kolejny poziom
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        timer = 0f; // Zresetuj timer
     }
 
     public void RestartLevel()
     {
-        LoadLevel(currentLevel);
-    }
-
-    void HandleTouchInput()
-    {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Stationary)
-            {
-                touchDuration += Time.deltaTime;
-
-                if (touchDuration >= requiredTouchTime)
-                {
-                    NextLevel(); // Zmieñ poziom po 2 sekundach trzymania dotyku
-                    touchDuration = 0f; // Zresetuj czas dotyku
-                }
-            }
-            else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
-            {
-                touchDuration = 0f; // Zresetuj czas dotyku, jeœli dotyk zosta³ przerwany
-            }
-        }
+        // Za³aduj aktualny poziom
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        timer = 0f; // Zresetuj timer
     }
 }

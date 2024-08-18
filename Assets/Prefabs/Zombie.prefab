@@ -50,10 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  move: 0
   jumpForce: 10
-  Dead: 0
-  zombieHealth: {fileID: 0}
 --- !u!212 &4889449117927240778
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -213,4 +210,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
-  HealthBar: {fileID: 8556362749890053925, guid: 635d29b531dee404d8c643425d8fe292, type: 3}
+  healthBar: {fileID: 8556362749890053925, guid: 635d29b531dee404d8c643425d8fe292, type: 3}

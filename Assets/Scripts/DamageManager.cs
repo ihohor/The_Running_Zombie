@@ -10,21 +10,18 @@ public class DamageManager : MonoBehaviour
         public int damage; // Obra¿enia zadawane przez bombê
     }
 
-    // Lista bomb zarz¹dzana przez DamageManager
-    public List<BombData> bombs = new List<BombData>();
+    public List<BombData> bombs = new List<BombData>(); // Lista bomb zarz¹dzana przez DamageManager
 
-    // Funkcja obliczaj¹ca obra¿enia zadane przez bombê
-    public void ApplyDamage(GameObject bomb, GameObject target)
+    public void ApplyDamage(GameObject bomb, ZombieStateAndHealth target)
     {
         BombData bombData = bombs.Find(b => b.bombPrefab == bomb);
         if (bombData != null)
         {
-            // Znalezienie skryptu zdrowia na obiekcie docelowym (np. ZombieHealth)
-            ZombieHealth targetHealth = target.GetComponent<ZombieHealth>();
-            if (targetHealth != null)
-            {
-                targetHealth.TakeDamage(bombData.damage);
-            }
+            target.TakeDamage(bombData.damage);
+        }
+        else
+        {
+            Debug.LogWarning("Brak danych dla tej bomby w DamageManager.");
         }
     }
 }
