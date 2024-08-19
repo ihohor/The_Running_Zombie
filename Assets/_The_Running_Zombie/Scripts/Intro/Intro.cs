@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(VideoPlayer))]
 public class Intro : MonoBehaviour
@@ -19,6 +20,7 @@ public class Intro : MonoBehaviour
 		{
 			_isFinished = true;
 			print("Finish");
-		}
+            SceneManager.LoadScene("MainMenu");
+        }
 	}
 }

@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class SimpleBomb : Item
+public class FrozenBomb : Item
 {
     [SerializeField] private Animator _explosionAnimator;
     [SerializeField] private GameObject _body;
-    [SerializeField] private int damage = 50;
+    [SerializeField] private float slowDuration = 5f;
+    [SerializeField] private float slowFactor = 0.5f;
     [SerializeField] private float explosionRadius = 5f;
 
     private void OnEnable()
@@ -16,21 +17,25 @@ public class SimpleBomb : Item
     {
         base.Collide(zombieHealth);
         _body.SetActive(false);
-        _explosionAnimator.Play("ExplosionSB");
-        zombieHealth.TakeDamage(damage);
+        _explosionAnimator.Play("FrozenExplosion");
+        ZombieMovement zombieMovement = zombieHealth.GetComponent<ZombieMovement>();
+        if (zombieMovement != null)
+        {
+            StartCoroutine(ApplySlowEffect(zombieMovement));
+        }
     }
 
     protected override void OnGroundCollision()
     {
         base.OnGroundCollision();
         _body.SetActive(false);
-        _explosionAnimator.Play("ExplosionSB");
+        _explosionAnimator.Play("FrozenExplosion");
 
-        StartCoroutine(ApplyExplosionDamage());
+        StartCoroutine(ApplyExplosionSlow());
         StartCoroutine(DestroyAfterExplosion());
     }
 
-    private IEnumerator ApplyExplosionDamage()
+    private IEnumerator ApplyExplosionSlow()
     {
         yield return new WaitForSeconds(_explosionAnimator.GetCurrentAnimatorStateInfo(0).length);
 
@@ -39,9 +44,23 @@ public class SimpleBomb : Item
         {
             if (collider.TryGetComponent(out ZombieStateAndHealth zombieHealth))
             {
-                zombieHealth.TakeDamage(damage);
+                ZombieMovement zombieMovement = zombieHealth.GetComponent<ZombieMovement>();
+                if (zombieMovement != null)
+                {
+                    StartCoroutine(ApplySlowEffect(zombieMovement));
+                }
             }
         }
+    }
+
+    private IEnumerator ApplySlowEffect(ZombieMovement zombieMovement)
+    {
+        float originalSpeed = zombieMovement.speed;
+        zombieMovement.speed *= slowFactor;
+
+        yield return new WaitForSeconds(slowDuration);
+
+        zombieMovement.speed = originalSpeed;
     }
 
     private IEnumerator DestroyAfterExplosion()
@@ -52,8 +71,7 @@ public class SimpleBomb : Item
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }
-
