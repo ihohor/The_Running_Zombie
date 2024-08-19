@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7814324666579775119}
   - component: {fileID: 3294036785737170372}
   - component: {fileID: 8509550939093371941}
-  - component: {fileID: 8937490626191309620}
   m_Layer: 8
   m_Name: SimpleBombExplosionAnimation
   m_TagString: Kinetic
@@ -107,17 +106,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8937490626191309620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7355392069816998561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7001867b1349b594891f706804592e9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 7355392069816998561}
-  damage: 50

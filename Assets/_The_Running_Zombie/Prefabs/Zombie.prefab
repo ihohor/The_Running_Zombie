@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6983105948727048773}
   - component: {fileID: 3136176416413915851}
   - component: {fileID: 202153630554389353}
-  - component: {fileID: 4349516467181181532}
+  - component: {fileID: 3185963418741411668}
   m_Layer: 3
   m_Name: Zombie
   m_TagString: Player
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: b625beae2a63c104ea1be9d178b6b023, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -196,7 +196,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4349516467181181532
+--- !u!114 &3185963418741411668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,5 +209,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  currentHealth: 0
-  healthBar: {fileID: 8556362749890053925, guid: 635d29b531dee404d8c643425d8fe292, type: 3}
+  currentHealth: 100
+  healthBar: {fileID: 0}

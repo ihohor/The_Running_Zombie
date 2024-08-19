@@ -25,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2740350074232170374}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.0027510072, w: 0.99999624}
-  m_LocalPosition: {x: -5.181, y: -2.235, z: -0.08218196}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1074505512737335292}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.315}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6896155961859449832
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: dfecc0923b6ad9e4bb1187809ad62dad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 1074505512737335292}
   - component: {fileID: 915926000560305082}
   - component: {fileID: 8832874639385682822}
+  - component: {fileID: 2075055005059260686}
   m_Layer: 10
   m_Name: MedKit
   m_TagString: MedKIt
@@ -110,7 +111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8379905116406690422}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.005498135, w: 0.9999849}
+  m_LocalRotation: {x: 0, y: 0, z: -0.0054977355, w: 0.9999849}
   m_LocalPosition: {x: 7.339426, y: 2.5982208, z: 0.08218196}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -177,6 +178,19 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -5.1837306, y: -2.2334049}
+  m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.40297893, y: 1.1347758}
   m_Direction: 0
+--- !u!114 &2075055005059260686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8379905116406690422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ce43d0ac040794497e96b090f05ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healAmount: 50
