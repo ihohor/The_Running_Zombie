@@ -55,9 +55,11 @@ public class EndSceneScript : MonoBehaviour
         // Wyœwietl g³owê zombie
         zombieHead.gameObject.SetActive(true);
 
-        // Ruch g³owy zombie w dó³
+        // Ruch g³owy zombie w dó³ i powiêkszanie
         Vector3 startPosition = zombieHead.rectTransform.anchoredPosition;
         Vector3 endPosition = new Vector3(startPosition.x, -Screen.height / 4, startPosition.z);
+        Vector3 startScale = zombieHead.rectTransform.localScale;
+        Vector3 endScale = startScale * 2f; // Powiêkszenie o 100%
 
         float elapsedTime = 0f;
         float moveDuration = 1f;
@@ -65,11 +67,13 @@ public class EndSceneScript : MonoBehaviour
         while (elapsedTime < moveDuration)
         {
             zombieHead.rectTransform.anchoredPosition = Vector3.Lerp(startPosition, endPosition, elapsedTime / moveDuration);
+            zombieHead.rectTransform.localScale = Vector3.Lerp(startScale, endScale, elapsedTime / moveDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         zombieHead.rectTransform.anchoredPosition = endPosition;
+        zombieHead.rectTransform.localScale = endScale;
 
         // Poka¿ zielony œlad
         greenSmear.gameObject.SetActive(true);

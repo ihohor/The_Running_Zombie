@@ -3,6 +3,9 @@ using UnityEngine;
 public class ZombieMovement : MonoBehaviour
 {
     public float speed = 5.0f;
+    public bool IsSlowed = false;
+    private float slowTimeLeft;
+
     public float jumpForce = 10.0f;
 
     private Rigidbody2D rb;
@@ -19,6 +22,15 @@ public class ZombieMovement : MonoBehaviour
     void Update()
     {
         HandleTouchInput();
+
+        if (IsSlowed)
+        {
+            slowTimeLeft -= Time.deltaTime;
+            if (slowTimeLeft <= 0)
+            {
+                IsSlowed = false;
+            }
+        }
     }
 
     void HandleTouchInput()
@@ -93,7 +105,6 @@ public class ZombieMovement : MonoBehaviour
         transform.localScale = scaler;
     }
 
-    // Obs³uga l¹dowania
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Ground"))
@@ -101,4 +112,10 @@ public class ZombieMovement : MonoBehaviour
             isGrounded = true;
         }
     }
+
+    public void ExtendSlowDuration(float additionalDuration)
+    {
+        slowTimeLeft += additionalDuration;
+    }
+
 }
