@@ -7,7 +7,7 @@ public class ZombieStateAndHealth : MonoBehaviour
     public float maxHealth = 100f;
     public float currentHealth;
     public Image healthBar;
-
+    private bool shieldActive = false;
     private Animator animator;
     private ZombieMovement zombieMovement;
     private bool isDead = false;
@@ -22,7 +22,7 @@ public class ZombieStateAndHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (isDead) return;
+        if (isDead || shieldActive) return;
 
         currentHealth -= damage;
         if (currentHealth <= 0)
@@ -59,7 +59,7 @@ public class ZombieStateAndHealth : MonoBehaviour
         {
             isDead = true;
             animator.SetTrigger("Dead");
-            zombieMovement.enabled = false; 
+            zombieMovement.enabled = false;
             Invoke("LoadDeathScreen", animator.GetCurrentAnimatorStateInfo(0).length);
         }
     }
@@ -67,5 +67,17 @@ public class ZombieStateAndHealth : MonoBehaviour
     void LoadDeathScreen()
     {
         SceneManager.LoadScene("DeathScreenScene");
+    }
+
+    public void ActivateShield()
+    {
+        shieldActive = true;
+        Debug.Log("Tarcza aktywna!");
+    }
+
+    public void DeactivateShield()
+    {
+        shieldActive = false;
+        Debug.Log("Tarcza dezaktywowana!");
     }
 }

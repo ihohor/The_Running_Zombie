@@ -80,12 +80,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -3.249197, y: 2.819212}
-      - {x: -5.34255, y: 1.7136178}
-      - {x: -4.4574685, y: 0.77360815}
-      - {x: -4.150056, y: 0.9848105}
-      - {x: -2.8898706, y: 2.3301814}
-      - {x: -2.721213, y: 2.8474524}
+    - - {x: 0.016500577, y: 0.6699889}
+      - {x: -0.15902978, y: 0.43277115}
+      - {x: -0.33205205, y: -0.31227732}
+      - {x: -0.33615172, y: -0.54088295}
+      - {x: -0.031195, y: -0.74301255}
+      - {x: 0.26602444, y: -0.51613206}
+      - {x: 0.27962917, y: -0.35442472}
+      - {x: 0.15077943, y: 0.39564505}
   m_UseDelaunayMesh: 0
 --- !u!50 &719161771351440371
 Rigidbody2D:
@@ -99,7 +101,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.5
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -128,10 +130,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explosionAnimator: {fileID: 7465523329863295083}
   _body: {fileID: 2042257602258129122}
-  damage: 10
-  explosionRadius: 5
-  speed: 2
-  rotationSpeed: 200
+  damage: 5
+  explosionRadius: 2
+  speed: 8
+  rotationSpeed: 100
+  detectionRadius: 5
 --- !u!1 &2042257602258129122
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,13 +160,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042257602258129122}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5537, y: 0.5027, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.43033367, w: 0.9026699}
+  m_LocalPosition: {x: -0.0063, y: -0.0824, z: 0}
+  m_LocalScale: {x: 0.23182072, y: 0.21628359, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8792388158940191890}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 50.977}
 --- !u!212 &434882105115486747
 SpriteRenderer:
   m_ObjectHideFlags: 0

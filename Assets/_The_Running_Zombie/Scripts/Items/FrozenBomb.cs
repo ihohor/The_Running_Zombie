@@ -11,8 +11,6 @@ public class FrozenBomb : Item
 
     private Collider2D _collider;
 
-    private bool isOriginalExplosion = true;
-
     private void OnEnable()
     {
         _collider = GetComponent<Collider2D>();
