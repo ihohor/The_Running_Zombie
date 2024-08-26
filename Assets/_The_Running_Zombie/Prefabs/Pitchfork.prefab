@@ -122,6 +122,7 @@ MonoBehaviour:
   speed: 5
   damage: 10
   lifetimeAfterImpact: 0.5
+  stabSound: {fileID: 8300000, guid: a37f44cbf8c2a7443a3c361efa2f233a, type: 3}
 --- !u!1 &4167081930558198999
 GameObject:
   m_ObjectHideFlags: 0

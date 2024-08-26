@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4277506927948422119}
   - component: {fileID: 4889449117927240778}
   - component: {fileID: 6983105948727048773}
-  - component: {fileID: 3136176416413915851}
-  - component: {fileID: 202153630554389353}
   - component: {fileID: 3185963418741411668}
+  - component: {fileID: 4378243763471802876}
+  - component: {fileID: 7895635160937987054}
   m_Layer: 3
   m_Name: Zombie
   m_TagString: Player
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 5171356344014048626}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.05, y: -3.88, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.44397113, y: 0.4742777, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -50,7 +50,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  IsSlowed: 0
   jumpForce: 10
+  groundCheck: {fileID: 3735319310721355486}
+  groundCheckRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!212 &4889449117927240778
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -124,8 +130,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &3136176416413915851
-BoxCollider2D:
+--- !u!114 &3185963418741411668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5171356344014048626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54bbc00c8dc31a7449292310efbe5888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+  healthBar: {fileID: 8556362749890053925, guid: 635d29b531dee404d8c643425d8fe292, type: 3}
+  shieldActive: 0
+--- !u!60 &4378243763471802876
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -156,7 +178,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.2636373, y: 0.08886659}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -166,10 +188,82 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 3.6251178, y: 4.0795126}
-  m_EdgeRadius: 0
---- !u!50 &202153630554389353
+  m_Points:
+    m_Paths:
+    - - {x: -0.22, y: -1.5749999}
+      - {x: -0.16, y: -1.645}
+      - {x: -0.12, y: -1.865}
+      - {x: 0.049999997, y: -1.885}
+      - {x: 0.35999998, y: -1.8449999}
+      - {x: 0.45999998, y: -1.795}
+      - {x: 0.57, y: -1.685}
+      - {x: 0.48999998, y: -1.345}
+      - {x: 0.52, y: -1.3349999}
+      - {x: 0.55, y: -1.245}
+      - {x: 0.57, y: -1.015}
+      - {x: 0.91999996, y: -1.015}
+      - {x: 0.96999997, y: -1.115}
+      - {x: 1.12, y: -1.155}
+      - {x: 1.22, y: -1.0749999}
+      - {x: 1.26, y: -1.005}
+      - {x: 1.37, y: -0.98499995}
+      - {x: 1.43, y: -0.865}
+      - {x: 1.4599999, y: -0.715}
+      - {x: 1.52, y: -0.615}
+      - {x: 1.52, y: -0.475}
+      - {x: 1.51, y: -0.445}
+      - {x: 1.41, y: -0.355}
+      - {x: 1.25, y: -0.345}
+      - {x: 1.13, y: -0.375}
+      - {x: 1.0699999, y: -0.205}
+      - {x: 1.12, y: -0.044999998}
+      - {x: 1.11, y: 0.285}
+      - {x: 1.09, y: 0.875}
+      - {x: 1.0699999, y: 1.0749999}
+      - {x: 1.01, y: 1.285}
+      - {x: 0.89, y: 1.495}
+      - {x: 0.79999995, y: 1.605}
+      - {x: 0.69, y: 1.7149999}
+      - {x: 0.42, y: 1.8549999}
+      - {x: 0.32, y: 1.875}
+      - {x: 0.08, y: 1.915}
+      - {x: -0.37, y: 1.915}
+      - {x: -0.59, y: 1.895}
+      - {x: -0.83, y: 1.865}
+      - {x: -1.15, y: 1.765}
+      - {x: -1.36, y: 1.635}
+      - {x: -1.48, y: 1.535}
+      - {x: -1.62, y: 1.365}
+      - {x: -1.7099999, y: 1.165}
+      - {x: -1.76, y: 1.025}
+      - {x: -1.78, y: 0.885}
+      - {x: -1.77, y: 0.625}
+      - {x: -1.89, y: 0.545}
+      - {x: -2, y: 0.435}
+      - {x: -2.05, y: 0.295}
+      - {x: -2.05, y: 0.074999996}
+      - {x: -2.01, y: -0.035}
+      - {x: -1.9799999, y: -0.114999995}
+      - {x: -1.78, y: -0.255}
+      - {x: -1.67, y: -0.275}
+      - {x: -1.49, y: -0.265}
+      - {x: -1.31, y: -0.415}
+      - {x: -1.24, y: -0.465}
+      - {x: -1.1, y: -0.575}
+      - {x: -1.1899999, y: -0.895}
+      - {x: -1.22, y: -1.145}
+      - {x: -1.23, y: -1.305}
+      - {x: -1.12, y: -1.495}
+      - {x: -1.12, y: -1.755}
+      - {x: -1.0799999, y: -1.805}
+      - {x: -0.96999997, y: -1.8549999}
+      - {x: -0.82, y: -1.895}
+      - {x: -0.61, y: -1.895}
+      - {x: -0.48999998, y: -1.8449999}
+      - {x: -0.42, y: -1.755}
+      - {x: -0.42999998, y: -1.5749999}
+  m_UseDelaunayMesh: 0
+--- !u!50 &7895635160937987054
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -196,18 +290,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &3185963418741411668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5171356344014048626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54bbc00c8dc31a7449292310efbe5888, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 100
-  healthBar: {fileID: 0}

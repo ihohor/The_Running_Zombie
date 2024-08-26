@@ -130,11 +130,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explosionAnimator: {fileID: 7465523329863295083}
   _body: {fileID: 2042257602258129122}
-  damage: 5
-  explosionRadius: 2
-  speed: 8
-  rotationSpeed: 100
-  detectionRadius: 5
+  damage: 3
+  explosionRadius: 1
+  speed: 10
+  rotationSpeed: 120
+  detectionRadius: 17
+  flightSound: {fileID: 8300000, guid: 281e15cc92254794eaf05caf4d044b76, type: 3}
+  explosionSound: {fileID: 8300000, guid: 0d6c86e8d08ecb644ac0933931ce9440, type: 3}
 --- !u!1 &2042257602258129122
 GameObject:
   m_ObjectHideFlags: 0

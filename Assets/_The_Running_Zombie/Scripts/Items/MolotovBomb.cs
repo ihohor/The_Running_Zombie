@@ -7,11 +7,23 @@ public class MolotovBomb : Item
     [SerializeField] private GameObject _body;
     [SerializeField] private float explosionRadius = 5f;
     [SerializeField] private int initialDamage = 5;
-    [SerializeField] private int burnDamage = 5; 
+    [SerializeField] private int burnDamage = 5;
     [SerializeField] private float burnDuration = 10f;
+
+    // DŸwiêk wybuchu
+    [SerializeField] private AudioClip explosionSound;
+
+    private AudioSource _audioSource;
 
     private void OnEnable()
     {
+        _audioSource = GetComponent<AudioSource>();
+
+        // Dodanie AudioSource, jeœli brak
+        if (_audioSource == null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     protected override void Collide(ZombieStateAndHealth zombieHealth)
@@ -19,6 +31,10 @@ public class MolotovBomb : Item
         base.Collide(zombieHealth);
         _body.SetActive(false);
         _explosionAnimator.Play("Fire");
+
+        // Odtwarzanie dŸwiêku wybuchu
+        PlayExplosionSound();
+
         ApplyInitialDamage(zombieHealth);
         StartCoroutine(ApplyBurning(zombieHealth));
     }
@@ -27,6 +43,9 @@ public class MolotovBomb : Item
     {
         base.OnGroundCollision();
         _body.SetActive(false);
+
+        // Odtwarzanie dŸwiêku wybuchu
+        PlayExplosionSound();
 
         // Odtwórz animacjê dwukrotnie
         StartCoroutine(PlayExplosionTwice());
@@ -77,6 +96,15 @@ public class MolotovBomb : Item
     {
         yield return new WaitForSeconds(_explosionAnimator.GetCurrentAnimatorStateInfo(0).length);
         Destroy(gameObject);
+    }
+
+    // Funkcja odtwarzaj¹ca dŸwiêk wybuchu
+    private void PlayExplosionSound()
+    {
+        if (explosionSound != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(explosionSound);
+        }
     }
 
     private void OnDrawGizmosSelected()

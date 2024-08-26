@@ -201,6 +201,7 @@ MonoBehaviour:
   initialDamage: 5
   burnDamage: 5
   burnDuration: 10
+  explosionSound: {fileID: 8300000, guid: ed710877a92862f4898adeb1fe3c0c89, type: 3}
 --- !u!1001 &553386390840675359
 PrefabInstance:
   m_ObjectHideFlags: 0

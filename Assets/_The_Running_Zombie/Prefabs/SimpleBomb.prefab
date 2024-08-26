@@ -110,9 +110,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7001867b1349b594891f706804592e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _destroyDelay: 5
   _explosionAnimator: {fileID: 8965749909321091377}
   _body: {fileID: 7886668458189430592}
   damage: 10
+  explosionRadius: 2
+  explosionSound: {fileID: 8300000, guid: af14e89f923576644b8a6993684edb53, type: 3}
 --- !u!1 &7886668458189430592
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,21 @@ public class SimpleBomb : Item
     [SerializeField] private int damage = 50;
     [SerializeField] private float explosionRadius = 5f;
 
+    // Dodanie pola dŸwiêku, które bêdzie widoczne w inspektorze
+    [SerializeField] private AudioClip explosionSound;
+
+    private AudioSource _audioSource;
+
+    private void Awake()
+    {
+        // Pobieramy AudioSource z obiektu lub dodajemy, jeœli nie istnieje
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
     private void OnEnable()
     {
     }
@@ -17,6 +32,10 @@ public class SimpleBomb : Item
         base.Collide(zombieHealth);
         _body.SetActive(false);
         _explosionAnimator.Play("ExplosionSB");
+
+        // Odtwarzanie dŸwiêku wybuchu
+        PlayExplosionSound();
+
         zombieHealth.TakeDamage(damage);
     }
 
@@ -25,6 +44,9 @@ public class SimpleBomb : Item
         base.OnGroundCollision();
         _body.SetActive(false);
         _explosionAnimator.Play("ExplosionSB");
+
+        // Odtwarzanie dŸwiêku wybuchu
+        PlayExplosionSound();
 
         StartCoroutine(ApplyExplosionDamage());
         StartCoroutine(DestroyAfterExplosion());
@@ -50,10 +72,18 @@ public class SimpleBomb : Item
         Destroy(gameObject);
     }
 
+    // Funkcja do odtwarzania dŸwiêku wybuchu
+    private void PlayExplosionSound()
+    {
+        if (explosionSound != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(explosionSound);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }
-

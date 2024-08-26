@@ -195,3 +195,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _destroyDelay: 5
   _healAmount: 50
+  medKitSound: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}

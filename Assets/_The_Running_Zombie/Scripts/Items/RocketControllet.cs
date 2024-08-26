@@ -11,15 +11,29 @@ public class HomingRocket : MonoBehaviour
     [SerializeField] private float rotationSpeed = 100f; // Szybkoœæ obracania siê w kierunku celu
     [SerializeField] private float detectionRadius = 10f; // Zasiêg wykrywania celu
 
+    // DŸwiêki lotu i eksplozji
+    [SerializeField] private AudioClip flightSound;
+    [SerializeField] private AudioClip explosionSound;
+
     private Rigidbody2D rb;
     private Transform _target;
     private bool hasTarget = false;
+    private AudioSource _audioSource;  // Komponent AudioSource
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
         // Rakieta pocz¹tkowo leci prosto
         rb.velocity = transform.up * speed;
+
+        // Odtwarzamy dŸwiêk lotu
+        PlayFlightSound();
     }
 
     private void Update()
@@ -75,6 +89,9 @@ public class HomingRocket : MonoBehaviour
         _body.SetActive(false);
         _explosionAnimator.Play("ExplosionSB");
 
+        // Odtwarzamy dŸwiêk eksplozji
+        PlayExplosionSound();
+
         StartCoroutine(ApplyExplosionDamage());
         StartCoroutine(DestroyAfterExplosion());
     }
@@ -106,5 +123,27 @@ public class HomingRocket : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
+
+    // Funkcja do odtwarzania dŸwiêku lotu
+    private void PlayFlightSound()
+    {
+        if (flightSound != null && _audioSource != null)
+        {
+            _audioSource.loop = true;  // Ustawiamy dŸwiêk lotu jako pêtla
+            _audioSource.clip = flightSound;
+            _audioSource.Play();
+        }
+    }
+
+    // Funkcja do odtwarzania dŸwiêku eksplozji
+    private void PlayExplosionSound()
+    {
+        if (explosionSound != null && _audioSource != null)
+        {
+            _audioSource.Stop();  // Zatrzymujemy dŸwiêk lotu
+            _audioSource.loop = false;  // Wy³¹czamy pêtlê dla dŸwiêku eksplozji
+            _audioSource.PlayOneShot(explosionSound);
+        }
     }
 }

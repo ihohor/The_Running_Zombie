@@ -9,7 +9,21 @@ public class FrozenBomb : Item
     [SerializeField] private float slowFactor = 0.5f;
     [SerializeField] private float explosionRadius = 5f;
 
+    // Pole na dŸwiêk wybuchu
+    [SerializeField] private AudioClip explosionSound;
+
+    private AudioSource _audioSource;
     private Collider2D _collider;
+
+    private void Awake()
+    {
+        // Pobieramy AudioSource z obiektu lub dodajemy, jeœli nie istnieje
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
 
     private void OnEnable()
     {
@@ -21,6 +35,9 @@ public class FrozenBomb : Item
         base.Collide(zombieHealth);
         _body.SetActive(false);
         _explosionAnimator.Play("FrozenExplosion");
+
+        // Odtwarzanie dŸwiêku wybuchu
+        PlayExplosionSound();
 
         DisableCollisionWithTag("Player");
 
@@ -35,8 +52,10 @@ public class FrozenBomb : Item
     {
         base.OnGroundCollision();
         _body.SetActive(false);
-
         _explosionAnimator.Play("FrozenExplosion");
+
+        // Odtwarzanie dŸwiêku wybuchu
+        PlayExplosionSound();
 
         DisableCollisionWithTag("Player");
 
@@ -99,10 +118,18 @@ public class FrozenBomb : Item
         }
     }
 
+    // Funkcja do odtwarzania dŸwiêku wybuchu
+    private void PlayExplosionSound()
+    {
+        if (explosionSound != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(explosionSound);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
-
 }

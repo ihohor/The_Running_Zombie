@@ -12,16 +12,23 @@ public class ZombieMovement : MonoBehaviour
     private bool facingRight = true;
     private bool isGrounded;
     private float lastTapTime;
-    private float doubleTapTime = 0.3f; // Czas pomiêdzy dwoma dotkniêciami
+    private float doubleTapTime = 0.3f;
+    public Transform groundCheck; 
+    public float groundCheckRadius = 0.2f;
+    public LayerMask groundLayer;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 3; 
     }
 
     void Update()
     {
         HandleTouchInput();
+
+        float clampedX = Mathf.Clamp(transform.position.x, -10f, 10f);
+        transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
 
         if (IsSlowed)
         {
@@ -29,8 +36,11 @@ public class ZombieMovement : MonoBehaviour
             if (slowTimeLeft <= 0)
             {
                 IsSlowed = false;
+                speed = 5.0f;
             }
         }
+
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
     void HandleTouchInput()
@@ -91,9 +101,7 @@ public class ZombieMovement : MonoBehaviour
     {
         if (isGrounded)
         {
-            float jumpDirection = facingRight ? 1 : -1;
-            rb.velocity = new Vector2(jumpDirection * speed, jumpForce);
-            isGrounded = false;
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
     }
 
@@ -116,6 +124,12 @@ public class ZombieMovement : MonoBehaviour
     public void ExtendSlowDuration(float additionalDuration)
     {
         slowTimeLeft += additionalDuration;
+        IsSlowed = true;
+        speed = 5.0f / 2;
     }
 
+    public void ResetSpeed()
+    {
+        speed = 5.0f;
+    }
 }

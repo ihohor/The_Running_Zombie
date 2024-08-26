@@ -6,13 +6,25 @@ public class PitchforkController : MonoBehaviour
     [SerializeField] private int damage = 50;
     [SerializeField] private float lifetimeAfterImpact = 10f;
 
+    // DŸwiêk wbicia wide³
+    [SerializeField] private AudioClip stabSound;
+
     private Rigidbody2D rb;
     private bool hasHit = false;
     private Vector2 flightDirection;
+    private AudioSource _audioSource;  // Komponent AudioSource
 
     private void OnEnable()
     {
         rb = GetComponent<Rigidbody2D>();
+        _audioSource = GetComponent<AudioSource>();
+
+        // Dodanie AudioSource, jeœli go brak
+        if (_audioSource == null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
         Vector2 targetPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
         ThrowTowardsTarget(targetPosition);
     }
@@ -51,6 +63,9 @@ public class PitchforkController : MonoBehaviour
                 if (Vector2.Dot(hitNormal, -flightDirection) > 0.5f)
                 {
                     zombieHealth.TakeDamage(damage);
+
+                    // Odtwarzanie dŸwiêku wbicia wide³
+                    PlayStabSound();
                 }
             }
 
@@ -65,5 +80,14 @@ public class PitchforkController : MonoBehaviour
 
         float angle = Mathf.Atan2(flightDirection.y, flightDirection.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    // Funkcja do odtwarzania dŸwiêku wbicia wide³
+    private void PlayStabSound()
+    {
+        if (stabSound != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(stabSound);
+        }
     }
 }

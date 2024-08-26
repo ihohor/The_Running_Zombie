@@ -200,6 +200,7 @@ MonoBehaviour:
   slowDuration: 5
   slowFactor: 0.5
   explosionRadius: 5
+  explosionSound: {fileID: 8300000, guid: 5d467d3401c35f04fb07d4fd767d49fa, type: 3}
 --- !u!1001 &5571931665019298623
 PrefabInstance:
   m_ObjectHideFlags: 0
