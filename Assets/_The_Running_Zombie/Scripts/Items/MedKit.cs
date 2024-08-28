@@ -4,8 +4,8 @@ public class MedKit : Item
 {
     [SerializeField] private int _healAmount = 50;
 
-    // DŸwiêk pojawienia siê apteczki
-    [SerializeField] private AudioClip medKitSound;
+    // DŸwiêk zbierania apteczki
+    [SerializeField] private AudioClip medKitPickupSound;
 
     private AudioSource _audioSource;
 
@@ -18,9 +18,6 @@ public class MedKit : Item
         {
             _audioSource = gameObject.AddComponent<AudioSource>();
         }
-
-        // Odtwarzanie dŸwiêku w pêtli, dopóki apteczka istnieje
-        PlayMedKitSound();
     }
 
     protected override void Collide(ZombieStateAndHealth zombieHealth)
@@ -28,30 +25,21 @@ public class MedKit : Item
         base.Collide(zombieHealth);
         zombieHealth.Heal(_healAmount);
 
-        // Zatrzymaj dŸwiêk po zderzeniu
-        StopMedKitSound();
+        // Odtwarzanie dŸwiêku po zebraniu apteczki
+        PlayMedKitPickupSound();
 
-        // Zniszcz apteczkê po u¿yciu
-        Destroy(gameObject);
+        // Zniszczenie apteczki po zebraniu, po krótkim czasie, aby dŸwiêk móg³ siê odtworzyæ
+        Destroy(gameObject, medKitPickupSound.length);
     }
 
-    // Funkcja odtwarzaj¹ca dŸwiêk apteczki
-    private void PlayMedKitSound()
+    // Funkcja odtwarzaj¹ca dŸwiêk zebrania apteczki
+    private void PlayMedKitPickupSound()
     {
-        if (medKitSound != null && _audioSource != null)
+        if (medKitPickupSound != null && _audioSource != null)
         {
-            _audioSource.clip = medKitSound;
-            _audioSource.loop = true;  // DŸwiêk bêdzie odtwarzany w pêtli
+            _audioSource.clip = medKitPickupSound;
+            _audioSource.loop = false;  // DŸwiêk nie jest odtwarzany w pêtli
             _audioSource.Play();
-        }
-    }
-
-    // Funkcja zatrzymuj¹ca dŸwiêk apteczki
-    private void StopMedKitSound()
-    {
-        if (_audioSource != null && _audioSource.isPlaying)
-        {
-            _audioSource.Stop();
         }
     }
 }

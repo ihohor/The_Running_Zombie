@@ -57,6 +57,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
+  walkingSound: {fileID: 8300000, guid: 2e001100e0f0be24c800812e37b6abed, type: 3}
+  idleSound: {fileID: 8300000, guid: 511d4576063a6a34dbe618dc97f78ac5, type: 3}
+  jumpSound: {fileID: 0}
 --- !u!212 &4889449117927240778
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -146,6 +149,8 @@ MonoBehaviour:
   currentHealth: 100
   healthBar: {fileID: 8556362749890053925, guid: 635d29b531dee404d8c643425d8fe292, type: 3}
   shieldActive: 0
+  damageSound: {fileID: 8300000, guid: d65b81d6b848b467da29dab292d5ac66, type: 3}
+  deathSound: {fileID: 8300000, guid: 931523c039e8648f2ae2785389e68571, type: 3}
 --- !u!60 &4378243763471802876
 PolygonCollider2D:
   m_ObjectHideFlags: 0

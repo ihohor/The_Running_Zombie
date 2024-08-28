@@ -13,17 +13,30 @@ public class ZombieMovement : MonoBehaviour
     private bool isGrounded;
     private float lastTapTime;
     private float doubleTapTime = 0.3f;
-    public Transform groundCheck; 
+    public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
-    void Start()
+    // Dodane dŸwiêki
+    [SerializeField] private AudioClip walkingSound;
+    [SerializeField] private AudioClip idleSound;
+    [SerializeField] private AudioClip jumpSound;
+    private AudioSource _audioSource;
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 3; 
+        rb.gravityScale = 3;
+
+        // Dodajemy lub sprawdzamy komponent AudioSource
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
-    void Update()
+    private void Update()
     {
         HandleTouchInput();
 
@@ -41,9 +54,15 @@ public class ZombieMovement : MonoBehaviour
         }
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        // Jeœli zombie siê nie porusza, odtwarza dŸwiêk "idle" (stania)
+        if (rb.velocity.x == 0 && isGrounded)
+        {
+            PlayIdleSound();
+        }
     }
 
-    void HandleTouchInput()
+    private void HandleTouchInput()
     {
         if (Input.touchCount > 0)
         {
@@ -74,38 +93,50 @@ public class ZombieMovement : MonoBehaviour
         }
     }
 
-    void MoveRight()
+    private void MoveRight()
     {
         rb.velocity = new Vector2(speed, rb.velocity.y);
         if (!facingRight)
         {
             Flip();
         }
+
+        // Odtwarzanie dŸwiêku chodzenia
+        PlayWalkingSound();
     }
 
-    void MoveLeft()
+    private void MoveLeft()
     {
         rb.velocity = new Vector2(-speed, rb.velocity.y);
         if (facingRight)
         {
             Flip();
         }
+
+        // Odtwarzanie dŸwiêku chodzenia
+        PlayWalkingSound();
     }
 
-    void StopMoving()
+    private void StopMoving()
     {
         rb.velocity = new Vector2(0, rb.velocity.y);
+
+        // Zatrzymanie dŸwiêku chodzenia
+        _audioSource.Stop();
     }
 
-    void Jump()
+    private void Jump()
     {
         if (isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+
+            // Odtwarzanie dŸwiêku skoku
+            PlayJumpSound();
         }
     }
 
-    void Flip()
+    private void Flip()
     {
         facingRight = !facingRight;
         Vector3 scaler = transform.localScale;
@@ -131,5 +162,34 @@ public class ZombieMovement : MonoBehaviour
     public void ResetSpeed()
     {
         speed = 5.0f;
+    }
+
+    // Funkcje do odtwarzania dŸwiêków
+    private void PlayWalkingSound()
+    {
+        if (walkingSound != null && _audioSource != null && !_audioSource.isPlaying)
+        {
+            _audioSource.clip = walkingSound;
+            _audioSource.loop = true; // DŸwiêk chodzenia bêdzie odtwarzany w pêtli
+            _audioSource.Play();
+        }
+    }
+
+    private void PlayIdleSound()
+    {
+        if (idleSound != null && _audioSource != null && !_audioSource.isPlaying)
+        {
+            _audioSource.clip = idleSound;
+            _audioSource.loop = true; // DŸwiêk stania bêdzie odtwarzany w pêtli
+            _audioSource.Play();
+        }
+    }
+
+    private void PlayJumpSound()
+    {
+        if (jumpSound != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(jumpSound); // DŸwiêk skoku odtworzony jednorazowo
+        }
     }
 }

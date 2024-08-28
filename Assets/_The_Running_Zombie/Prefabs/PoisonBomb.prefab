@@ -200,6 +200,7 @@ MonoBehaviour:
   explosionRadius: 5
   poisonDamage: 3
   poisonDuration: 5
+  explosionSound: {fileID: 8300000, guid: 8417ea5a598fd254fa9487d8d0df3173, type: 3}
 --- !u!1001 &2447388809607118792
 PrefabInstance:
   m_ObjectHideFlags: 0

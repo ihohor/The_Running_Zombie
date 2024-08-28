@@ -9,8 +9,19 @@ public class PoisonBomb : Item
     [SerializeField] private int poisonDamage = 3; // Obra¿enia od trucizny
     [SerializeField] private float poisonDuration = 5f; // Czas trwania trucizny
 
+    // Dodajemy dŸwiêk wybuchu
+    [SerializeField] private AudioClip explosionSound;
+
+    private AudioSource _audioSource;
+
     private void OnEnable()
     {
+        // Sprawdzenie lub dodanie komponentu AudioSource
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     protected override void Collide(ZombieStateAndHealth zombieHealth)
@@ -18,6 +29,10 @@ public class PoisonBomb : Item
         base.Collide(zombieHealth);
         _body.SetActive(false);
         _explosionAnimator.Play("PoisonBomb");
+
+        // Odtwarzamy dŸwiêk wybuchu
+        PlayExplosionSound();
+
         StartCoroutine(ApplyPoison(zombieHealth));
     }
 
@@ -26,6 +41,9 @@ public class PoisonBomb : Item
         base.OnGroundCollision();
         _body.SetActive(false);
         _explosionAnimator.Play("PoisonBomb");
+
+        // Odtwarzamy dŸwiêk wybuchu
+        PlayExplosionSound();
 
         StartCoroutine(ApplyExplosionPoison());
         StartCoroutine(DestroyAfterExplosion());
@@ -60,6 +78,15 @@ public class PoisonBomb : Item
     {
         yield return new WaitForSeconds(_explosionAnimator.GetCurrentAnimatorStateInfo(0).length);
         Destroy(gameObject);
+    }
+
+    // Odtwarzanie dŸwiêku wybuchu
+    private void PlayExplosionSound()
+    {
+        if (explosionSound != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(explosionSound); // Odtwarza dŸwiêk wybuchu
+        }
     }
 
     private void OnDrawGizmosSelected()
