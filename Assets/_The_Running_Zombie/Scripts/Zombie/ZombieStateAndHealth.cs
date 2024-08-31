@@ -24,7 +24,6 @@ public class ZombieStateAndHealth : MonoBehaviour
         animator = GetComponent<Animator>();
         zombieMovement = GetComponent<ZombieMovement>();
 
-        // Dodajemy lub sprawdzamy komponent AudioSource
         _audioSource = GetComponent<AudioSource>();
         if (_audioSource == null)
         {
@@ -34,14 +33,6 @@ public class ZombieStateAndHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (isDead || shieldActive)
-        {
-            if (shieldActive)
-            {
-                Debug.Log("Zombie chronione przez tarczê! Brak obra¿eñ.");
-            }
-            return;
-        }
 
         currentHealth -= damage;
         PlayDamageSound(); // Odtwórz dŸwiêk obra¿eñ
@@ -80,7 +71,7 @@ public class ZombieStateAndHealth : MonoBehaviour
         if (!isDead)
         {
             isDead = true;
-            animator.SetTrigger("Dead");
+            animator.Play("Dead");
             PlayDeathSound(); // Odtwórz dŸwiêk œmierci
             zombieMovement.enabled = false;
             Invoke("LoadDeathScreen", animator.GetCurrentAnimatorStateInfo(0).length);

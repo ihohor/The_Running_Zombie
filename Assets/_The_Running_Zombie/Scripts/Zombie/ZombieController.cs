@@ -17,7 +17,7 @@ public class ZombieMovement : MonoBehaviour
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
-    // Dodane dŸwiêki
+    [SerializeField] private Animator _animationComtrole;
     [SerializeField] private AudioClip walkingSound;
     [SerializeField] private AudioClip idleSound;
     [SerializeField] private AudioClip jumpSound;
@@ -27,8 +27,8 @@ public class ZombieMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 3;
+        _animationComtrole.Play("Idle");
 
-        // Dodajemy lub sprawdzamy komponent AudioSource
         _audioSource = GetComponent<AudioSource>();
         if (_audioSource == null)
         {
@@ -55,7 +55,6 @@ public class ZombieMovement : MonoBehaviour
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        // Jeœli zombie siê nie porusza, odtwarza dŸwiêk "idle" (stania)
         if (rb.velocity.x == 0 && isGrounded)
         {
             PlayIdleSound();
@@ -66,29 +65,31 @@ public class ZombieMovement : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            Touch touch = Input.GetTouch(0);
+            Touch touch = Input.GetTouch(0); // Deklaracja zmiennej 'touch'
 
             if (touch.phase == TouchPhase.Began)
             {
                 if (touch.position.x > Screen.width / 2)
                 {
                     MoveRight();
+                    _animationComtrole.Play("Walk");
                 }
-                else
+                else if (touch.position.x <= Screen.width / 2)
                 {
                     MoveLeft();
+                    _animationComtrole.Play("Walk");
                 }
 
-                if (Time.time - lastTapTime < doubleTapTime)
+                // Dodaj logikê skoku w odpowiednim miejscu
+                if (touch.position.y < Screen.height / 4 && isGrounded) // Skok, gdy dotkniêcie jest w dolnej czêœci ekranu
                 {
                     Jump();
                 }
-
-                lastTapTime = Time.time;
             }
             else if (touch.phase == TouchPhase.Ended)
             {
                 StopMoving();
+                _animationComtrole.Play("Idle");
             }
         }
     }
@@ -101,7 +102,6 @@ public class ZombieMovement : MonoBehaviour
             Flip();
         }
 
-        // Odtwarzanie dŸwiêku chodzenia
         PlayWalkingSound();
     }
 
@@ -113,7 +113,6 @@ public class ZombieMovement : MonoBehaviour
             Flip();
         }
 
-        // Odtwarzanie dŸwiêku chodzenia
         PlayWalkingSound();
     }
 
@@ -121,7 +120,6 @@ public class ZombieMovement : MonoBehaviour
     {
         rb.velocity = new Vector2(0, rb.velocity.y);
 
-        // Zatrzymanie dŸwiêku chodzenia
         _audioSource.Stop();
     }
 
@@ -131,7 +129,6 @@ public class ZombieMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
-            // Odtwarzanie dŸwiêku skoku
             PlayJumpSound();
         }
     }
@@ -164,13 +161,12 @@ public class ZombieMovement : MonoBehaviour
         speed = 5.0f;
     }
 
-    // Funkcje do odtwarzania dŸwiêków
     private void PlayWalkingSound()
     {
         if (walkingSound != null && _audioSource != null && !_audioSource.isPlaying)
         {
             _audioSource.clip = walkingSound;
-            _audioSource.loop = true; // DŸwiêk chodzenia bêdzie odtwarzany w pêtli
+            _audioSource.loop = true;
             _audioSource.Play();
         }
     }
@@ -180,7 +176,7 @@ public class ZombieMovement : MonoBehaviour
         if (idleSound != null && _audioSource != null && !_audioSource.isPlaying)
         {
             _audioSource.clip = idleSound;
-            _audioSource.loop = true; // DŸwiêk stania bêdzie odtwarzany w pêtli
+            _audioSource.loop = true;
             _audioSource.Play();
         }
     }
@@ -189,7 +185,7 @@ public class ZombieMovement : MonoBehaviour
     {
         if (jumpSound != null && _audioSource != null)
         {
-            _audioSource.PlayOneShot(jumpSound); // DŸwiêk skoku odtworzony jednorazowo
+            _audioSource.PlayOneShot(jumpSound);
         }
     }
 }

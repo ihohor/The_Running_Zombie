@@ -57,6 +57,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
+  _animationComtrole: {fileID: 6983105948727048773}
   walkingSound: {fileID: 8300000, guid: 2e001100e0f0be24c800812e37b6abed, type: 3}
   idleSound: {fileID: 8300000, guid: 511d4576063a6a34dbe618dc97f78ac5, type: 3}
   jumpSound: {fileID: 0}
@@ -276,7 +277,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5171356344014048626}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

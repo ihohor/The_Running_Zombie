@@ -951,6 +951,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1778675210 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6983105948727048773, guid: 047719a933a1fa84293761447777241b, type: 3}
+  m_PrefabInstance: {fileID: 3847386012751415993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1835078908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1250,6 +1255,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1630579428}
+    - target: {fileID: 3185963418741411668, guid: 047719a933a1fa84293761447777241b, type: 3}
+      propertyPath: currentHealth
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3735319310721355486, guid: 047719a933a1fa84293761447777241b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.05
@@ -1290,13 +1299,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4277506927948422119, guid: 047719a933a1fa84293761447777241b, type: 3}
+      propertyPath: _animationComtrole
+      value: 
+      objectReference: {fileID: 1778675210}
     - target: {fileID: 5171356344014048626, guid: 047719a933a1fa84293761447777241b, type: 3}
       propertyPath: m_Name
       value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 7895635160937987054, guid: 047719a933a1fa84293761447777241b, type: 3}
       propertyPath: m_BodyType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
