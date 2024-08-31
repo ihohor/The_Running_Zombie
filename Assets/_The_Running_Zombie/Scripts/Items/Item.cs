@@ -37,7 +37,7 @@ public abstract class Item : MonoBehaviour
 
     protected virtual void OnGroundCollision()
     {
-        Debug.Log("Kolizja z ziemi¹!");
+        Debug.Log("Kolizja z ziemia!");
     }
 }
 

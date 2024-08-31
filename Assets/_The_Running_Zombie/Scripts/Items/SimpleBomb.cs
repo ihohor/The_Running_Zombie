@@ -3,87 +3,73 @@ using System.Collections;
 
 public class SimpleBomb : Item
 {
-    [SerializeField] private Animator _explosionAnimator;
-    [SerializeField] private GameObject _body;
-    [SerializeField] private int damage = 50;
-    [SerializeField] private float explosionRadius = 5f;
+	[SerializeField] private Animator _explosionAnimator;
+	[SerializeField] private AudioSource _audioSource;
+	[SerializeField] private AudioClip explosionSound;
+	[SerializeField] private Rigidbody2D _rigidbody;
+	[SerializeField] private Collider2D _collider;
+	[SerializeField] private GameObject _body;
+	[SerializeField] private float explosionRadius = 5f;
+	[SerializeField] private int damage = 50;
 
-    // Dodanie pola dŸwiêku, które bêdzie widoczne w inspektorze
-    [SerializeField] private AudioClip explosionSound;
+	protected override void Collide(ZombieStateAndHealth zombieHealth)
+	{
+		base.Collide(zombieHealth);
+		DisableBomb();
+		print("health");
+		zombieHealth.TakeDamage(damage);
+	}
+	
+	private void DisableBomb()
+	{
+		_body.SetActive(false);
+		_rigidbody.bodyType = RigidbodyType2D.Static;
+		_rigidbody.freezeRotation = true;
+		_collider.enabled = false;
+		transform.rotation = new Quaternion(0, 0, 0, 0);
+		_explosionAnimator.Play("ExplosionSB");
+		PlayExplosionSound();
+	}
 
-    private AudioSource _audioSource;
+	protected override void OnGroundCollision()
+	{
+		base.OnGroundCollision();
+		DisableBomb();
+		StartCoroutine(ApplyExplosionDamage());
+		StartCoroutine(DestroyAfterExplosion());
+	}
 
-    private void Awake()
-    {
-        // Pobieramy AudioSource z obiektu lub dodajemy, jeœli nie istnieje
-        _audioSource = GetComponent<AudioSource>();
-        if (_audioSource == null)
-        {
-            _audioSource = gameObject.AddComponent<AudioSource>();
-        }
-    }
+	private IEnumerator ApplyExplosionDamage()
+	{
+		yield return new WaitForSeconds(_explosionAnimator.GetCurrentAnimatorStateInfo(0).length);
 
-    private void OnEnable()
-    {
-    }
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+		foreach (Collider2D collider in colliders)
+		{
+			if (collider.TryGetComponent(out ZombieStateAndHealth zombieHealth))
+			{
+				zombieHealth.TakeDamage(damage);
+			}
+		}
+	}
 
-    protected override void Collide(ZombieStateAndHealth zombieHealth)
-    {
-        base.Collide(zombieHealth);
-        _body.SetActive(false);
-        _explosionAnimator.Play("ExplosionSB");
+	private IEnumerator DestroyAfterExplosion()
+	{
+		yield return new WaitForSeconds(_explosionAnimator.GetCurrentAnimatorStateInfo(0).length);
+		Destroy(gameObject);
+	}
 
-        // Odtwarzanie dŸwiêku wybuchu
-        PlayExplosionSound();
+	private void PlayExplosionSound()
+	{
+		if (explosionSound != null && _audioSource != null)
+		{
+			_audioSource.PlayOneShot(explosionSound);
+		}
+	}
 
-        zombieHealth.TakeDamage(damage);
-    }
-
-    protected override void OnGroundCollision()
-    {
-        base.OnGroundCollision();
-        _body.SetActive(false);
-        _explosionAnimator.Play("ExplosionSB");
-
-        // Odtwarzanie dŸwiêku wybuchu
-        PlayExplosionSound();
-
-        StartCoroutine(ApplyExplosionDamage());
-        StartCoroutine(DestroyAfterExplosion());
-    }
-
-    private IEnumerator ApplyExplosionDamage()
-    {
-        yield return new WaitForSeconds(_explosionAnimator.GetCurrentAnimatorStateInfo(0).length);
-
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
-        foreach (Collider2D collider in colliders)
-        {
-            if (collider.TryGetComponent(out ZombieStateAndHealth zombieHealth))
-            {
-                zombieHealth.TakeDamage(damage);
-            }
-        }
-    }
-
-    private IEnumerator DestroyAfterExplosion()
-    {
-        yield return new WaitForSeconds(_explosionAnimator.GetCurrentAnimatorStateInfo(0).length);
-        Destroy(gameObject);
-    }
-
-    // Funkcja do odtwarzania dŸwiêku wybuchu
-    private void PlayExplosionSound()
-    {
-        if (explosionSound != null && _audioSource != null)
-        {
-            _audioSource.PlayOneShot(explosionSound);
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
-    }
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position, explosionRadius);
+	}
 }

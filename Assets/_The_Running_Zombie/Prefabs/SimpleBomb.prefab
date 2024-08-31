@@ -112,10 +112,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _destroyDelay: 5
   _explosionAnimator: {fileID: 8965749909321091377}
-  _body: {fileID: 7886668458189430592}
-  damage: 10
-  explosionRadius: 2
+  _audioSource: {fileID: 0}
   explosionSound: {fileID: 8300000, guid: af14e89f923576644b8a6993684edb53, type: 3}
+  _rigidbody: {fileID: 570562176202729783}
+  _collider: {fileID: 3804529992773261315}
+  _body: {fileID: 7886668458189430592}
+  explosionRadius: 2
+  damage: 10
 --- !u!1 &7886668458189430592
 GameObject:
   m_ObjectHideFlags: 0
